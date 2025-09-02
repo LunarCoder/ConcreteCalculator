@@ -1,2 +1,2 @@
 # ConcreteCalculator
-Software Engineering Project for YSU
+Collaboratibe Software Engineering Project for YSU
