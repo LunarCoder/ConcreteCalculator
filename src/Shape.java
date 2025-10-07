@@ -1,3 +1,4 @@
+//the base interface of the shape classes
 interface Shape{
     //return float value of the shape's volume
     double getVolume();
