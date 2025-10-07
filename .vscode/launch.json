@@ -16,7 +16,7 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "TheConcreteCalculator_cc5e2608",
+            "projectName": "ConcreteCalculator_2a12cd17",
             "vmArgs": "--module-path \"C:\\Users\\Timothy Finch\\Documents\\JavaFx\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
