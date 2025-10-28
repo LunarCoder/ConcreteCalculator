@@ -9,7 +9,7 @@ public class Square implements Shape {
 
     @Override
     public double getVolume() {
-        return length * length;
+        return length * length * length;
     }
 
     @Override
