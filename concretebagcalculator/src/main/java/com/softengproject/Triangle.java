@@ -16,6 +16,17 @@ public class Triangle implements Shape {
         return 1.0/2.0 * base * height * depth;
     }
 
+    public double getbase() {
+        return base;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+    public double getDepth() {
+        return depth;
+    }
+    
     @Override
     public String toString() {
         return "Triangle";
