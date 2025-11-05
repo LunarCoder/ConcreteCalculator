@@ -38,7 +38,7 @@ public class App extends Application {
         imageView.setFitWidth(200); //set image size
         imageView.setPreserveRatio(true);
 
-        Label shapeLabel = new Label("Select Shape;");
+        Label shapeLabel = new Label("Select Shape:");
         ChoiceBox<String> shapeChoiceBox = new ChoiceBox<>();
         shapeChoiceBox.setItems(FXCollections.observableArrayList(
                 "Rectangle", "Square", "Circle", "Triangle"
@@ -160,6 +160,7 @@ public class App extends Application {
             depthField.clear();
             radiusField.clear();
             outputArea.clear();
+            savedCalculationsList.clear();
             shapeChoiceBox.getSelectionModel().selectFirst();
         });
 
