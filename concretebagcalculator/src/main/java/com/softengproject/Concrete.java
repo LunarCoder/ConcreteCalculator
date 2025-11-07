@@ -36,7 +36,7 @@ public class Concrete {
         String filename= "shapes_" + now.format(dtf);
         System.out.println(filename);
 
-        //Save shapes to a file, each line is
+        //Save shapes to a file, each line is a shape name with parameters separated by dashes
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
             for (Shape shape : shapes) {
                 if (shape.toString().equals("Circle")) {
@@ -57,8 +57,8 @@ public class Concrete {
         }
     }
 
+    // Implementation for loading shapes from a file
     public void loadFile(String filename) {
-        // Implementation for loading shapes from a file
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {

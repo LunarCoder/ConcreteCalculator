@@ -5,8 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.control.Button;
+import javafx.scene.effect.Shadow;
+import javafx.scene.layout.VBox;
 import java.io.IOException;
+
 
 /**
  * JavaFX App
@@ -14,22 +17,36 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private Concrete concrete;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
+        stage.setTitle("Concrete Bag Calculator");
+        concrete = new Concrete();
+
+        Button saveButton = new Button("Save");
+        Button loadButton = new Button("Load");
+        Button showButton = new Button("Show Shapes");
+        saveButton.setOnAction(e -> {
+            concrete.saveFile();
+        });
+        loadButton.setOnAction(e -> {
+            concrete.loadFile("shapes_2025_10_28_11_59_09");
+        });
+        showButton.setOnAction(e -> {
+            concrete.getShapes().forEach(shape -> {
+                System.out.println(shape);
+            });
+        });
+
+        VBox vbox = new VBox(saveButton, loadButton, showButton);
+        Scene scene = new Scene(vbox,400, 200);
+        
+        stage.setScene(scene);  
         stage.show();
+
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
 
     public static void main(String[] args) {
         launch();
