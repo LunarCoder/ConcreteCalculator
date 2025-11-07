@@ -16,6 +16,18 @@ public class Rectangle implements Shape {
         return length * width * depth;
     }
 
+    public double getLength() {
+        return length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+    
+    public double getDepth() {
+        return depth;
+    }
+
     @Override
     public String toString() {
         return "Rectangle";

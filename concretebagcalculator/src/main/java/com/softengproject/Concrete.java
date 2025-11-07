@@ -30,6 +30,14 @@ public class Concrete {
         return shapes;
     }
 
+    public String toString() {
+        String output = "Current Selection:\n";
+        for (Shape shape : shapes) {
+            output += shape.toString() + " with volume: " + shape.getVolume() + "\n";
+        }
+        return output;
+    }
+
     public void saveFile() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
         LocalDateTime now = LocalDateTime.now();
@@ -51,6 +59,7 @@ public class Concrete {
                 } else if (shape.toString().equals("Square")) {
                     Square square = (Square) shape;
                     writer.println("Square-" + square.getLength() + "-" + square.getDepth());
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
