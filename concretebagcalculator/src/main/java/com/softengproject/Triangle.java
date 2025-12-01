@@ -13,7 +13,7 @@ public class Triangle implements Shape {
 
     @Override
     public double getVolume() {
-        return 1.0/2.0 * base * height * depth;
+        return (1.0/2.0 * base * height) * depth;
     }
 
     @Override
