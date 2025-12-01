@@ -14,6 +14,14 @@ public class Circle implements Shape {
         return Math.PI * radius * radius * depth;
     }
 
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getDepth() {
+        return depth;
+    }
+    
     @Override
     public String toString() {
         return "Circle";

@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.io.File;
+
 /**
  * JavaFX App
  */
@@ -25,10 +29,14 @@ public class App extends Application {
     private TextArea outputArea;
     private ObservableList<String> savedCalculationsList = FXCollections.observableArrayList();
     private ListView<String> savedCalculationsView;
+    private static Concrete concrete;
 
     @Override
     public void start(Stage stage) throws IOException {
         
+        //Initialize concrete helper class
+        concrete = new Concrete();
+
         //Top Left Section (Image and Dropdown)
         VBox leftControlBox = new VBox(10);
         leftControlBox.setPadding(new Insets(20));
@@ -69,13 +77,31 @@ public class App extends Application {
         parameterPane.add(depthLabel, 0, 2); parameterPane.add(depthField, 1, 2);
         parameterPane.add(radiusLabel, 0, 3); parameterPane.add(radiusField, 1, 3);
 
-        //center section (history list)
+        //center section
+        //Loading and saving calculations logic
         savedCalculationsView = new ListView<>(savedCalculationsList);
-        savedCalculationsView.setPlaceholder(new Label("No saved calculations yet."));
-
         VBox historyBox = new VBox(10, new Label("Saved Calculations:"), savedCalculationsView);
         historyBox.setPadding(new Insets(0, 20, 0, 20));
         VBox.setVgrow(savedCalculationsView, Priority.ALWAYS);
+        //Update Current Saved Files
+        updateSavedCalculationsList();
+        //Handle loading of a saved shape file when selected in the savedCalculationsView listview
+        savedCalculationsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String selectedItem = savedCalculationsView.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    try {
+                        // Clear current shapes before loading new ones
+                        concrete.clearShapes();
+                        concrete.loadFile(selectedItem);
+                        updateShapes();
+                    } catch (Exception e) {
+                        outputArea.setText("Error loading file: " + e.getMessage());
+                    }
+                }
+            }
+        });
 
         //bottom sections (output on the left, buttons on the right)
 
@@ -137,6 +163,7 @@ public class App extends Application {
             }
         });
 
+
         //Place Holder Button Logic...
         calculateButton.setOnAction(event -> {
             System.out.println("Calculate button clicked. Logic to be implemented.");
@@ -149,18 +176,18 @@ public class App extends Application {
         });
 
         saveToFileButton.setOnAction(event -> {
-            System.out.println("Save button clicked. Logic to be implemented.");
-            outputArea.setText("Save logic goes here.");
+            concrete.saveFile();
+            updateSavedCalculationsList();
         });
 
         clearButton.setOnAction(event -> {
             System.out.println("Clear button clicked. Resetting fields.");
+            concrete.clearShapes();
             lengthField.clear();
             widthField.clear();
             depthField.clear();
             radiusField.clear();
             outputArea.clear();
-            savedCalculationsList.clear();
             shapeChoiceBox.getSelectionModel().selectFirst();
         });
 
@@ -170,6 +197,26 @@ public class App extends Application {
         stage.show();
 
         shapeChoiceBox.getSelectionModel().selectFirst();
+    }
+
+    //Update the list of compatible shapes_ files
+    private void updateSavedCalculationsList() {
+        // Logic to update the saved calculations list
+        savedCalculationsList.clear();
+        File directory = new File("./");
+        File[] files = directory.listFiles(); 
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().startsWith("shapes_")) {
+                    savedCalculationsList.add(file.getName());
+                }
+            }
+        }
+    }
+
+    //Update the list of shapes in our current selection
+    private void updateShapes() {
+        outputArea.setText(concrete.toString());
     }
 
     public static void main(String[] args) {
