@@ -171,35 +171,71 @@ public class App extends Application {
         });
 
         addToListButton.setOnAction(event -> {
-            System.out.println("Add to List button clicked. Logic to be implemented.");
             outputArea.setText("Add to List logic goes here.");
+            String selectedShape = shapeChoiceBox.getSelectionModel().getSelectedItem();
+            if (selectedShape != null) {
+                try {
+                    Shape newShape;
+                    switch (selectedShape) {
+                        case "Rectangle":
+                            newShape = new Rectangle(Double.parseDouble(lengthField.getText()), Double.parseDouble(widthField.getText()), Double.parseDouble(depthField.getText()));
+                            concrete.addShape(newShape);
+                            break;
+                        case "Square":
+                            newShape = new Square(Double.parseDouble(lengthField.getText()), Double.parseDouble(depthField.getText()));
+                            concrete.addShape(newShape);
+                            break;
+                        case "Circle":
+                            newShape = new Circle(Double.parseDouble(radiusField.getText()), Double.parseDouble(depthField.getText()));
+                            concrete.addShape(newShape);
+                            break;
+                        case "Triangle":
+                            newShape = new Triangle(Double.parseDouble(widthField.getText()), Double.parseDouble(lengthField.getText()), Double.parseDouble(depthField.getText()));
+                            concrete.addShape(newShape);
+                            break;
+                        default:
+                            outputArea.setText("Invalid input: Unknown shape " + selectedShape);
+                    }
+                    updateShapes();
+                } catch (NumberFormatException e) {
+                    outputArea.setText("Invalid input: " + e.getMessage());
+                }
+            } else {
+                outputArea.setText("Please select a shape.");
+            }
+            
         });
 
-        saveToFileButton.setOnAction(event -> {
-            concrete.saveFile();
-            updateSavedCalculationsList();
-        });
+    saveToFileButton.setOnAction(event->
 
-        clearButton.setOnAction(event -> {
-            System.out.println("Clear button clicked. Resetting fields.");
-            concrete.clearShapes();
-            lengthField.clear();
-            widthField.clear();
-            depthField.clear();
-            radiusField.clear();
-            outputArea.clear();
-            shapeChoiceBox.getSelectionModel().selectFirst();
-        });
+    {
+        concrete.saveFile();
+        updateSavedCalculationsList();
+    });
 
-        Scene scene = new Scene(mainLayout,800,600);
-        stage.setTitle("Concrete Calculator");
-        stage.setScene(scene);
-        stage.show();
-
+    clearButton.setOnAction(event->
+    {
+        System.out.println("Clear button clicked. Resetting fields, and clearing file if selected.");
+        concrete.clearFile(savedCalculationsView.getSelectionModel().getSelectedItem()); //also clears the concrete.shapes arraylist
+        lengthField.clear();
+        widthField.clear();
+        depthField.clear();
+        radiusField.clear();
+        outputArea.clear();
         shapeChoiceBox.getSelectionModel().selectFirst();
-    }
 
-    //Update the list of compatible shapes_ files
+        updateSavedCalculationsList();
+    });
+
+    Scene scene = new Scene(mainLayout, 800, 600);
+    stage.setTitle("Concrete Calculator");
+    stage.setScene(scene);
+    stage.show();
+    shapeChoiceBox.getSelectionModel().selectFirst(); //default selection
+    
+}
+
+    // Update the list of compatible shapes_ files
     private void updateSavedCalculationsList() {
         // Logic to update the saved calculations list
         savedCalculationsList.clear();
@@ -214,7 +250,7 @@ public class App extends Application {
         }
     }
 
-    //Update the list of shapes in our current selection
+    // Update the list of shapes in our current selection
     private void updateShapes() {
         outputArea.setText(concrete.toString());
     }

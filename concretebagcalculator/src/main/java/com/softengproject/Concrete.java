@@ -81,11 +81,21 @@ public class Concrete {
                 } else if (shapeType.equals("Rectangle")) {
                     shapes.add(new Rectangle(Double.parseDouble(parts[1]), Double.parseDouble(parts[2]), Double.parseDouble(parts[3])));
                 } else if (shapeType.equals("Square")) {
-                    shapes.add(new Square(Double.parseDouble(parts[1]),  Double.parseDouble(parts[3])));
+                    shapes.add(new Square(Double.parseDouble(parts[1]),  Double.parseDouble(parts[2])));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //Delete file and clear shapes arraylist
+    public void clearFile(String filename) {
+        try {
+            java.nio.file.Files.deleteIfExists(java.nio.file.Paths.get(filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        shapes.clear();
     }
 }
