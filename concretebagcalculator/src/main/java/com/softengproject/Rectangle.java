@@ -13,19 +13,19 @@ public class Rectangle implements Shape {
 
     @Override
     public double getVolume() {
-        return length * width * depth;
+        return this.length * this.width * this.depth;
     }
 
     public double getLength() {
-        return length;
+        return this.length;
     }
 
     public double getWidth() {
-        return width;
+        return this.width;
     }
-    
+
     public double getDepth() {
-        return depth;
+        return this.depth;
     }
 
     @Override

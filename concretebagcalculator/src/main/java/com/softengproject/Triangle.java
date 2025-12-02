@@ -13,20 +13,21 @@ public class Triangle implements Shape {
 
     @Override
     public double getVolume() {
-        return 1.0/2.0 * base * height * depth;
+        return 1.0 / 2.0 * this.base * this.height * this.depth;
     }
 
     public double getbase() {
-        return base;
+        return this.base;
     }
 
     public double getHeight() {
-        return height;
+        return this.height;
     }
+
     public double getDepth() {
-        return depth;
+        return this.depth;
     }
-    
+
     @Override
     public String toString() {
         return "Triangle";

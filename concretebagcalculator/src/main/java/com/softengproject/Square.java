@@ -11,15 +11,15 @@ public class Square implements Shape {
 
     @Override
     public double getVolume() {
-        return length * length * depth;
+        return this.length * this.length * this.depth;
     }
 
     public double getLength() {
-        return length;
+        return this.length;
     }
 
     public double getDepth() {
-        return depth;
+        return this.depth;
     }
 
     @Override

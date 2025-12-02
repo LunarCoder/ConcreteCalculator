@@ -11,17 +11,17 @@ public class Circle implements Shape {
 
     @Override
     public double getVolume() {
-        return Math.PI * radius * radius * depth;
+        return Math.PI * this.radius * this.radius * this.depth;
     }
 
     public double getRadius() {
-        return radius;
+        return this.radius;
     }
 
     public double getDepth() {
-        return depth;
+        return this.depth;
     }
-    
+
     @Override
     public String toString() {
         return "Circle";
