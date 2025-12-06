@@ -104,7 +104,6 @@ public class App extends Application {
         });
 
         //bottom sections (output on the left, buttons on the right)
-
         //Bottom Left: output area or total bags needed
         outputArea = new TextArea(); // initializing the output area
         outputArea.setEditable(false);
@@ -164,14 +163,14 @@ public class App extends Application {
         });
 
 
-        //Place Holder Button Logic...
+        //Calculat the bags of concrete required based on current shapes list
         calculateButton.setOnAction(event -> {
-            System.out.println("Calculate button clicked. Logic to be implemented.");
-            outputArea.setText("Calculation logic goes here.");
+            double bagsNeeded = concrete.getBagsRequired();
+            outputArea.setText("Total Bags Required (60lb bags): " + bagsNeeded + "\n\n" + concrete.toString());
         });
 
+        //Add the current selected shape and paramters to the shapes list
         addToListButton.setOnAction(event -> {
-            outputArea.setText("Add to List logic goes here.");
             String selectedShape = shapeChoiceBox.getSelectionModel().getSelectedItem();
             if (selectedShape != null) {
                 try {
@@ -206,13 +205,14 @@ public class App extends Application {
             
         });
 
+    //Save the current selection of shapes to a new file.
     saveToFileButton.setOnAction(event->
-
     {
         concrete.saveFile();
         updateSavedCalculationsList();
     });
 
+    //Clear the current selection of shapes and reset all fields.
     clearButton.setOnAction(event->
     {
         System.out.println("Clear button clicked. Resetting fields, and clearing file if selected.");
@@ -234,6 +234,8 @@ public class App extends Application {
     shapeChoiceBox.getSelectionModel().selectFirst(); //default selection
     
 }
+
+    //Continuity functions to keep the window updated after performing other operations
 
     // Update the list of compatible shapes_ files
     private void updateSavedCalculationsList() {
