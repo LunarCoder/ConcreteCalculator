@@ -30,10 +30,26 @@ public class Concrete {
         return shapes;
     }
 
+    // Calculate the number of bags required based on total volume of our current shapes divided by bag volume, in cubic feet.
+    //80lb: 0.6
+    //60lb: 0.45
+    //40lb: 0.30
+    public double getBagsRequired(double bagVolume) {
+        double totalVolume = 0.0;
+        for (Shape shape : shapes) {
+            totalVolume += shape.getVolume();
+        }
+        return Math.ceil(totalVolume / bagVolume);
+    }
+    //Method overload for bag default: 60lb bag, or 0.45 cubic feet
+    public double getBagsRequired() {
+        return getBagsRequired(0.45);
+    }
+
     public String toString() {
         String output = "Current Selection:\n";
         for (Shape shape : shapes) {
-            output += shape.toString() + " with volume: " + shape.getVolume() + "\n";
+            output += shape.toString() + " with volume: " + shape.getVolume() + " ft^3\n";
         }
         return output;
     }
